@@ -89,7 +89,7 @@
 
   <section class="contact">
     <h2>ติดต่อ</h2>
-    <p>Email: <a href="mailto:youremail@example.com">Phongsakon.n@Gmail.com</a></p>
+    <p>Email: <a href="mailto:youremail@example.com">Phongsakon.n@ku.th</a></p>
     <p>GitHub: <a href="https://github.com/phongsakonn-nut" target="_blank">github.com/phongsakonn-nut</a></p>
   </section>
 
