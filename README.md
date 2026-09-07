@@ -75,6 +75,42 @@
   .demo-link:hover {
     background: #1a252f;
   }
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 16px;
+  }
+  .work-card {
+    display: block;
+    min-height: 165px;
+    padding: 20px;
+    border: 1px solid #dbe2e8;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #ffffff, #edf4f8);
+    color: #222;
+    text-decoration: none;
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.06);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .work-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 18px rgba(44, 62, 80, 0.18);
+  }
+  .work-card h3 {
+    margin: 0 0 10px;
+    color: #2c3e50;
+  }
+  .work-card p {
+    margin: 0;
+    color: #566573;
+    line-height: 1.5;
+  }
+  .open-work {
+    display: inline-block;
+    margin-top: 16px;
+    color: #2c3e50;
+    font-weight: 700;
+  }
 </style>
 </head>
 <body>
@@ -108,6 +144,29 @@
       <li>Computer Graphics (Transformation, Canvas API)</li>
       <li>ทำเบเกอร์ เล่นฟุตบอล</li>
     </ul>
+  </section>
+
+  <section>
+    <h2>ผลงาน Interactive Computer Graphics</h2>
+    <div class="portfolio-grid">
+      <a class="work-card" href="https://phongsakonn-nut.github.io/13/700_transfromation.html" target="_blank" rel="noopener">
+        <h3>Transformation</h3>
+        <p>สาธิตการแปลงรูปทรงสองมิติด้วย Transformation</p>
+        <span class="open-work">เปิดผลงาน →</span>
+      </a>
+
+      <a class="work-card" href="https://phongsakonn-nut.github.io/13/paint.html" target="_blank" rel="noopener">
+        <h3>Assignment #2: Paint</h3>
+        <p>เว็บวาดภาพแบบโต้ตอบด้วย Canvas API</p>
+        <span class="open-work">เปิดผลงาน →</span>
+      </a>
+
+      <a class="work-card" href="https://phongsakonn-nut.github.io/13/doghome.html" target="_blank" rel="noopener">
+        <h3>Assignment #3: Dog Home</h3>
+        <p>ฉากสามมิติ WebGL พร้อม PBR และการปรับแสง</p>
+        <span class="open-work">เปิดผลงาน →</span>
+      </a>
+    </div>
   </section>
 
 
