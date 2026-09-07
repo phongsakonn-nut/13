@@ -1,26 +1,29 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dog Home — PBR Lighting</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dog Home - PBR Lighting</title>
   <style>
-    html, body { height: 100%; margin: 0; overflow: hidden; background: #11131a; }
+    body { margin: 0; overflow: hidden; font-family: Arial, sans-serif; }
     canvas { display: block; }
-    #hint {
-      position: fixed; left: 16px; bottom: 16px; z-index: 2;
-      max-width: 340px; padding: 11px 14px; border-radius: 8px;
-      color: #f5f7ff; background: rgba(10, 13, 20, .76);
-      font: 14px/1.45 system-ui, sans-serif; pointer-events: none;
+    #info {
+      position: fixed;
+      left: 12px;
+      bottom: 12px;
+      padding: 10px 12px;
+      color: white;
+      background: rgba(0, 0, 0, 0.55);
+      border-radius: 6px;
+      font-size: 14px;
+      pointer-events: none;
     }
-    #status { color: #b8d7ff; margin-top: 4px; font-size: 12px; }
   </style>
 </head>
 <body>
-  <div id="hint">
-    <strong>Dog Home — PBR</strong><br />
-    ลากลูกบอลเรืองแสงเพื่อย้ายไฟในแนวพื้น หรือใช้แผง GUI ด้านขวา
-    <div id="status">กำลังโหลดโมเดลและ environment…</div>
+  <div id="info">
+    <b>Dog Home (PBR)</b><br />
+    ปรับตำแหน่งและความสว่างของไฟจากเมนูด้านขวา
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
@@ -30,213 +33,118 @@
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/libs/dat.gui.min.js"></script>
 
   <script>
-    // URLs จากงานเดิม: GLB เป็นโมเดลบ้านหมา ไม่ควรนำไปโหลดผ่าน TextureLoader
-    const MODEL_URL = 'https://phongsakonn-nut.github.io/13/%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%AB%E0%B8%A1%E0%B8%B2final.glb';
-    const HDR_URL = 'https://dl.polyhaven.org/file/ph-assets/HDRIs/exr/1k/venice_sunset_1k.exr';
-    const status = document.getElementById('status');
-
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.outputEncoding = THREE.sRGBEncoding;
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.1;
     document.body.appendChild(renderer.domElement);
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x9fc7df); // สีสำรองขณะ HDR ยังโหลดไม่เสร็จ
+    scene.background = new THREE.Color(0x9fd3ed);
 
-    const camera = new THREE.PerspectiveCamera(48, window.innerWidth / window.innerHeight, 0.1, 100);
-    camera.position.set(5.2, 3.4, 7.2);
-
-    const controls = new THREE.OrbitControls(camera, renderer.domElement);
-    controls.target.set(0, 1, 0);
-    controls.enableDamping = true;
-    controls.maxPolarAngle = Math.PI * 0.48;
-
-    // --- แสงหลัก: ย้ายได้ด้วย GUI หรือด้วยการลากลูกบอล ---
-    const sun = new THREE.DirectionalLight(0xfff1d6, 3.2);
-    sun.position.set(-4, 6, 4);
-    sun.castShadow = true;
-    sun.shadow.mapSize.set(2048, 2048);
-    sun.shadow.camera.left = -8;
-    sun.shadow.camera.right = 8;
-    sun.shadow.camera.top = 8;
-    sun.shadow.camera.bottom = -8;
-    sun.shadow.bias = -0.00025;
-    scene.add(sun);
-    scene.add(sun.target);
-    sun.target.position.set(0, 0, 0);
-
-    const fillLight = new THREE.HemisphereLight(0xbfdcff, 0x342418, 0.55);
-    scene.add(fillLight);
-
-    const lightHandle = new THREE.Mesh(
-      new THREE.SphereGeometry(0.20, 20, 14),
-      new THREE.MeshBasicMaterial({ color: sun.color })
+    const camera = new THREE.PerspectiveCamera(
+      50,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      100
     );
-    scene.add(lightHandle);
+    camera.position.set(5, 3.5, 7);
 
-    const lightHelper = new THREE.DirectionalLightHelper(sun, 0.7, 0xffe2a5);
-    scene.add(lightHelper);
+    // หมุนดูบ้านหมาด้วยเมาส์
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.target.set(0, 0.8, 0);
+    controls.enableDamping = true;
 
-    // พื้น PBR รับเงาจากบ้านหมา
+    // แสงหลัก: ค่าทั้ง 4 ตัวนี้ปรับได้จาก GUI
+    const light = new THREE.DirectionalLight(0xffffff, 2.5);
+    light.position.set(4, 6, 4);
+    light.castShadow = true;
+    light.shadow.mapSize.set(1024, 1024);
+    light.shadow.camera.left = -8;
+    light.shadow.camera.right = 8;
+    light.shadow.camera.top = 8;
+    light.shadow.camera.bottom = -8;
+    scene.add(light);
+    scene.add(light.target);
+    light.target.position.set(0, 0, 0);
+
+    // แสงเติม เพื่อให้ด้านที่เป็นเงาไม่มืดสนิท
+    scene.add(new THREE.HemisphereLight(0xbde2ff, 0x4b3728, 0.45));
+
+    // พื้นแบบ PBR สำหรับรับเงา
     const floorMaterial = new THREE.MeshStandardMaterial({
-      color: 0x547044,
-      roughness: 0.92,
-      metalness: 0.0
+      color: 0x587744,
+      metalness: 0.0,
+      roughness: 0.9
     });
     const floor = new THREE.Mesh(new THREE.PlaneGeometry(30, 30), floorMaterial);
     floor.rotation.x = -Math.PI / 2;
     floor.receiveShadow = true;
     scene.add(floor);
 
-    const pbrMaterials = [];
-    const settings = {
-      lightX: sun.position.x,
-      lightY: sun.position.y,
-      lightZ: sun.position.z,
-      lightIntensity: sun.intensity,
-      lightColor: '#fff1d6',
-      exposure: renderer.toneMappingExposure,
-      baseColor: '#ffffff',
-      metallic: 0.05,
-      roughness: 0.72,
-      showLightHelper: true
-    };
-
-    function syncLight() {
-      sun.position.set(settings.lightX, settings.lightY, settings.lightZ);
-      lightHandle.position.copy(sun.position);
-      sun.color.set(settings.lightColor);
-      lightHandle.material.color.copy(sun.color);
-      sun.intensity = settings.lightIntensity;
-      lightHelper.visible = settings.showLightHelper;
-      lightHelper.update();
-    }
-
-    function updatePBR() {
-      pbrMaterials.forEach((material) => {
-        material.color.set(settings.baseColor);
-        material.metalness = settings.metallic;
-        material.roughness = settings.roughness;
-        material.needsUpdate = true;
-      });
-    }
-
-    // GUI: แสดงคุณสมบัติ PBR ตามโจทย์ และตำแหน่งแหล่งกำเนิดแสง
-    const gui = new dat.GUI({ width: 310 });
-    const lightFolder = gui.addFolder('แหล่งกำเนิดแสง');
-    lightFolder.add(settings, 'lightX', -10, 10, 0.1).name('ตำแหน่ง X').onChange(syncLight);
-    lightFolder.add(settings, 'lightY', 0.5, 12, 0.1).name('ความสูง Y').onChange(syncLight);
-    lightFolder.add(settings, 'lightZ', -10, 10, 0.1).name('ตำแหน่ง Z').onChange(syncLight);
-    lightFolder.add(settings, 'lightIntensity', 0, 8, 0.05).name('ความสว่าง').onChange(syncLight);
-    lightFolder.addColor(settings, 'lightColor').name('สีไฟ').onChange(syncLight);
-    lightFolder.add(settings, 'showLightHelper').name('แสดงตัวช่วย').onChange(syncLight);
-    lightFolder.open();
-
-    const materialFolder = gui.addFolder('PBR ของบ้านหมา');
-    materialFolder.addColor(settings, 'baseColor').name('Base color').onChange(updatePBR);
-    materialFolder.add(settings, 'metallic', 0, 1, 0.01).name('Metallic').onChange(updatePBR);
-    materialFolder.add(settings, 'roughness', 0, 1, 0.01).name('Roughness').onChange(updatePBR);
-    materialFolder.open();
-    gui.add(settings, 'exposure', 0.2, 2.5, 0.05).name('Exposure').onChange((value) => {
-      renderer.toneMappingExposure = value;
-    });
-
-    syncLight();
-
-    // Environment / IBL สำหรับให้ผิว PBR สะท้อนแสงของสภาพแวดล้อม
+    // Environment map เพื่อให้วัสดุ PBR รับแสงจากสภาพแวดล้อม
     const pmremGenerator = new THREE.PMREMGenerator(renderer);
-    pmremGenerator.compileEquirectangularShader();
-    new THREE.EXRLoader().load(HDR_URL, (texture) => {
-      texture.mapping = THREE.EquirectangularReflectionMapping;
-      scene.background = texture;
-      scene.environment = pmremGenerator.fromEquirectangular(texture).texture;
-      pmremGenerator.dispose();
-    }, undefined, () => {
-      // แสงตรงยังทำงานได้ แม้ HDR จะโหลดจากอินเทอร์เน็ตไม่สำเร็จ
-      status.textContent = 'โหลด HDR ไม่สำเร็จ แต่ยังปรับแสงและ PBR ได้ตามปกติ';
-    });
+    new THREE.EXRLoader().load(
+      'https://dl.polyhaven.org/file/ph-assets/HDRIs/exr/1k/venice_sunset_1k.exr',
+      (texture) => {
+        scene.environment = pmremGenerator.fromEquirectangular(texture).texture;
+        texture.dispose();
+        pmremGenerator.dispose();
+      },
+      undefined,
+      () => console.log('ไม่สามารถโหลด environment map ได้')
+    );
 
-    // โหลดโมเดล GLB และยืนยันว่า mesh ทุกชิ้นใช้ MeshStandardMaterial (PBR)
-    new THREE.GLTFLoader().load(MODEL_URL, (gltf) => {
-      const dogHome = gltf.scene;
-      dogHome.traverse((child) => {
-        if (!child.isMesh) return;
-        child.castShadow = true;
-        child.receiveShadow = true;
+    // โหลดโมเดลบ้านหมา และกำหนดให้ mesh ใช้คุณสมบัติ PBR แบบคงที่
+    const loader = new THREE.GLTFLoader();
+    loader.load(
+      'https://phongsakonn-nut.github.io/13/%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%AB%E0%B8%A1%E0%B8%B2final.glb',
+      (gltf) => {
+        const dogHome = gltf.scene;
 
-        const materials = Array.isArray(child.material) ? child.material : [child.material];
-        materials.forEach((material) => {
-          if (material && material.isMeshStandardMaterial) {
-            pbrMaterials.push(material);
+        dogHome.traverse((child) => {
+          if (!child.isMesh) return;
+          child.castShadow = true;
+          child.receiveShadow = true;
+
+          // MeshStandardMaterial คือ PBR material ของ Three.js
+          if (child.material && child.material.isMeshStandardMaterial) {
+            child.material.metalness = 0.05;
+            child.material.roughness = 0.75;
           }
         });
-      });
 
-      scene.add(dogHome);
-      // วางฐานของโมเดลพอดีกับพื้น และจัดไว้กลางฉาก
-      const box = new THREE.Box3().setFromObject(dogHome);
-      const center = box.getCenter(new THREE.Vector3());
-      dogHome.position.set(-center.x, -box.min.y, -center.z);
+        scene.add(dogHome);
 
-      updatePBR();
-      controls.target.set(0, 0.8, 0);
-      controls.update();
-      status.textContent = 'พร้อมใช้งาน: ลากลูกบอล หรือปรับแสงจาก GUI ได้เลย';
-    }, undefined, (error) => {
-      console.error(error);
-      status.textContent = 'โหลดโมเดลไม่สำเร็จ — ตรวจสอบการเชื่อมต่ออินเทอร์เน็ต';
-    });
+        // วางโมเดลไว้กลางพื้น
+        const box = new THREE.Box3().setFromObject(dogHome);
+        const center = box.getCenter(new THREE.Vector3());
+        dogHome.position.set(-center.x, -box.min.y, -center.z);
+      },
+      undefined,
+      (error) => console.error('โหลดโมเดลไม่สำเร็จ', error)
+    );
 
-    // Mouse interaction: ลาก light handle เพื่อปรับตำแหน่ง X/Z บนพื้น
-    const raycaster = new THREE.Raycaster();
-    const pointer = new THREE.Vector2();
-    const dragPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
-    const hitPoint = new THREE.Vector3();
-    let draggingLight = false;
+    // มีแค่การปรับตำแหน่งไฟและความสว่างตามที่ต้องการ
+    const settings = {
+      positionX: light.position.x,
+      positionY: light.position.y,
+      positionZ: light.position.z,
+      brightness: light.intensity
+    };
 
-    function setPointer(event) {
-      const rect = renderer.domElement.getBoundingClientRect();
-      pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-      pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+    function updateLight() {
+      light.position.set(settings.positionX, settings.positionY, settings.positionZ);
+      light.intensity = settings.brightness;
     }
 
-    renderer.domElement.addEventListener('pointerdown', (event) => {
-      setPointer(event);
-      raycaster.setFromCamera(pointer, camera);
-      if (raycaster.intersectObject(lightHandle, false).length > 0) {
-        draggingLight = true;
-        controls.enabled = false;
-        renderer.domElement.setPointerCapture(event.pointerId);
-      }
-    });
-
-    renderer.domElement.addEventListener('pointermove', (event) => {
-      if (!draggingLight) return;
-      setPointer(event);
-      raycaster.setFromCamera(pointer, camera);
-      if (raycaster.ray.intersectPlane(dragPlane, hitPoint)) {
-        settings.lightX = THREE.MathUtils.clamp(hitPoint.x, -10, 10);
-        settings.lightZ = THREE.MathUtils.clamp(hitPoint.z, -10, 10);
-        syncLight();
-        gui.updateDisplay();
-      }
-    });
-
-    function stopDragging(event) {
-      if (!draggingLight) return;
-      draggingLight = false;
-      controls.enabled = true;
-      if (renderer.domElement.hasPointerCapture(event.pointerId)) {
-        renderer.domElement.releasePointerCapture(event.pointerId);
-      }
-    }
-    renderer.domElement.addEventListener('pointerup', stopDragging);
-    renderer.domElement.addEventListener('pointercancel', stopDragging);
+    const gui = new dat.GUI();
+    gui.add(settings, 'positionX', -10, 10, 0.1).name('ตำแหน่ง X').onChange(updateLight);
+    gui.add(settings, 'positionY', 1, 12, 0.1).name('ตำแหน่ง Y').onChange(updateLight);
+    gui.add(settings, 'positionZ', -10, 10, 0.1).name('ตำแหน่ง Z').onChange(updateLight);
+    gui.add(settings, 'brightness', 0, 5, 0.1).name('ความสว่าง').onChange(updateLight);
 
     window.addEventListener('resize', () => {
       camera.aspect = window.innerWidth / window.innerHeight;
