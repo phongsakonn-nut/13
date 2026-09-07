@@ -157,13 +157,13 @@
 
       <a class="work-card" href="https://phongsakonn-nut.github.io/13/paint.html" target="_blank" rel="noopener">
         <h3>Assignment #2: Paint</h3>
-        <p>เว็บวาดภาพแบบโต้ตอบด้วย Canvas API</p>
+        
         <span class="open-work">เปิดผลงาน →</span>
       </a>
 
       <a class="work-card" href="https://phongsakonn-nut.github.io/13/doghome.html" target="_blank" rel="noopener">
         <h3>Assignment #3: Dog Home</h3>
-        <p>ฉากสามมิติ WebGL พร้อม PBR และเมนูปรับตำแหน่งกับความสว่างของแสง</p>
+       
         <span class="open-work">เปิดผลงาน →</span>
       </a>
     </div>
