@@ -166,6 +166,12 @@
        
         <span class="open-work">เปิดผลงาน →</span>
       </a>
+      
+      <a class="work-card" href="https://phongsakonn-nut.github.io/13/bookmagic.glb" target="_blank" rel="noopener">
+        <h3>Assignment #3:bookmagic </h3>
+       
+        <span class="open-work">เปิดผลงาน →</span>
+      </a>
     </div>
   </section>
 
