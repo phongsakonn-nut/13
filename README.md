@@ -166,7 +166,7 @@
         <span class="open-work">เปิดผลงาน →</span>
       </a>
       
-      <a class="work-card" href="C:\comgraf2\animations.html" target="_blank" rel="noopener">
+      <a class="work-card" href="https://phongsakonn-nut.github.io/13/portforilo.html" target="_blank" rel="noopener">
         <h3>Assignment #3:bookmagic </h3>
        
         <span class="open-work">เปิดผลงาน →</span>
