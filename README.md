@@ -148,8 +148,8 @@
 
   <section>
     <h2>ผลงาน Interactive Computer Graphics</h2>
-    <div class="portfolio-grid">
-      <a class="work-card" href="https://phongsakonn-nut.github.io/13/bookmagic.glb" target="_blank" rel="noopener">
+    <div class="Transformation-grid">
+      <a class="work-card" href="" target="_blank" rel="noopener">
         <h3> Portforilo </h3>
         <span class="open-work">เปิดผลงาน →</span>
       </a>
@@ -166,7 +166,7 @@
         <span class="open-work">เปิดผลงาน →</span>
       </a>
       
-      <a class="work-card" href="https://phongsakonn-nut.github.io/13/bookmagic.glb" target="_blank" rel="noopener">
+      <a class="work-card" href="C:\comgraf2\animations.html" target="_blank" rel="noopener">
         <h3>Assignment #3:bookmagic </h3>
        
         <span class="open-work">เปิดผลงาน →</span>
