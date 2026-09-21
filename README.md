@@ -149,9 +149,8 @@
   <section>
     <h2>ผลงาน Interactive Computer Graphics</h2>
     <div class="portfolio-grid">
-      <a class="work-card" href="https://phongsakonn-nut.github.io/13/700_transfromation.html" target="_blank" rel="noopener">
-        <h3>Transformation</h3>
-        <p>สาธิตการแปลงรูปทรงสองมิติด้วย Transformation</p>
+      <a class="work-card" href="https://phongsakonn-nut.github.io/13/bookmagic.glb" target="_blank" rel="noopener">
+        <h3> Portforilo </h3>
         <span class="open-work">เปิดผลงาน →</span>
       </a>
 
