@@ -166,8 +166,8 @@
         <span class="open-work">เปิดผลงาน →</span>
       </a>
       
-      <a class="work-card" href="https://phongsakonn-nut.github.io/13/portforilo.html" target="_blank" rel="noopener">
-        <h3>Assignment #3:bookmagic </h3>
+      <a class="work-card" href="https://phongsakonn-nut.github.io/13/portf2.html" target="_blank" rel="noopener">
+        <h3>Assignment #3:Model Portforilo </h3>
        
         <span class="open-work">เปิดผลงาน →</span>
       </a>
